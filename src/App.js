@@ -13,7 +13,6 @@ function App() {
         <Search />
       </Container>
       <Container maxWidth="md">
-        <MovieList />
       </Container>
     </div>
   )
