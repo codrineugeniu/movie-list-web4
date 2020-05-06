@@ -1,0 +1,9 @@
+div.container {
+  margin: 16px 0;
+  display: flex;
+}
+
+div.search {
+  width: 75%;
+  margin-right: 8px;
+}
