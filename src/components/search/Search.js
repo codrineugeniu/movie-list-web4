@@ -18,7 +18,7 @@ class Search extends Component {
   handleSearch = () => {
     console.log(this.state.searchTerm)
     const { API_URL, API_KEY } = Settings
-    //https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&query=Terminator
+    // https://api.themoviedb.org/3/search/movie?api_key=<<api_key>>&query=Terminator
     const url = `${API_URL}/search/movie?api_key=${API_KEY}&query=${this.state.searchTerm}`
 
     axios.get(url).then((response) => {
@@ -32,6 +32,14 @@ class Search extends Component {
     this.setState({
       searchTerm: event.target.value,
     })
+  }
+
+  handleAdd = (movie) => {
+    this.setState({
+      searchResults: [],
+      searchTerm: ''
+    })
+    this.props.onMovieAdd(movie)
   }
 
   render() {
@@ -56,7 +64,10 @@ class Search extends Component {
         </Container>
         {this.state.searchResults.length > 0 && (
           <Container className={styles.results}>
-            <ResultsList movies={this.state.searchResults} />
+            <ResultsList
+              movies={this.state.searchResults}
+              onAdd={this.handleAdd}
+            />
           </Container>
         )}
       </React.Fragment>

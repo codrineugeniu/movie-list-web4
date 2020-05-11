@@ -9,25 +9,26 @@ import {
   Typography,
 } from '@material-ui/core'
 
-const MovieCard = () => {
+const MovieCard = (props) => {
+  const { movie } = props
   return (
     <Card>
       <CardActionArea>
         <CardContent>
           <CardMedia image="" description="movie poster"></CardMedia>
-          <Typography variant="h5">
-            Movie Title
-          </Typography>
+          <Typography variant="h5">{movie.original_title}</Typography>
           <Typography variant="body2" color="textSecondary">
-            Movie description...
+            {movie.release_date}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">Delete</Button>
+        <Button size="small" color="primary">
+          Delete
+        </Button>
       </CardActions>
     </Card>
   )
 }
 
-export default MovieCard;
+export default MovieCard
