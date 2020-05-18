@@ -13,7 +13,10 @@ import AddIcon from '@material-ui/icons/Add'
 
 import styles from './ResultsList.module.css'
 
-const getPosterUrl = (imageUri) => `https://image.tmdb.org/t/p/w200${imageUri}`
+const getPosterUrl = (imageUri) =>
+  imageUri
+    ? `https://image.tmdb.org/t/p/w200${imageUri}`
+    : 'https://placehold.co/200x300?text=No+image'
 
 const ResultsList = (props) => (
   <React.Fragment>
