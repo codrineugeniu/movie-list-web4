@@ -1,0 +1,7 @@
+.star {
+  color: lightslategray;
+}
+
+.star:hover {
+  color: orange;
+}

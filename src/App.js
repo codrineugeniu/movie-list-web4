@@ -7,10 +7,10 @@ import Search from './components/search/Search'
 
 class App extends React.Component {
   state = {
-    
     savedMovies: [],
     user: null,
-    userName: ''
+    userName: '',
+    showSecret: false,
   }
 
   componentDidMount() {
@@ -54,30 +54,36 @@ class App extends React.Component {
   }
 
   handleAddUser = (event) => {
-    localStorage.setItem('userDetails', JSON.stringify({
-      userName: this.state.userName
-    }))
+    localStorage.setItem(
+      'userDetails',
+      JSON.stringify({
+        userName: this.state.userName,
+      }),
+    )
 
     this.setState({
       user: {
-        userName: this.state.userName
+        userName: this.state.userName,
       },
-      userName: null
+      userName: null,
     })
   }
 
   onUserChange = (event) => {
     const { value } = event.target
     this.setState({
-      userName: value
+      userName: value,
     })
+  }
+
+  changeRating = (rating, movie) => {
+    console.log(Object.assign({}, movie, { userRating: rating }))
   }
 
   logout = () => {
     this.setState({ user: null })
     localStorage.removeItem('userDetails')
   }
-
 
   render() {
     const { savedMovies, user } = this.state
@@ -89,17 +95,20 @@ class App extends React.Component {
             <Container maxWidth="md">
               <Search onMovieAdd={this.onMovieAdd} />
             </Container>
+            {this.state.showSecret && <h2>This is interactive </h2>}
             <Container maxWidth="md">
-              <MovieList savedMovies={savedMovies} />
+              <MovieList savedMovies={savedMovies} changeRating={this.changeRating} />
             </Container>
           </React.Fragment>
         ) : (
-            <Container maxWidth="md">
-              <h2>Hello stranger!</h2>
-              <h4>What is your name?</h4>
-              <TextField label="Name" onChange={this.onUserChange} />
-              <Button variant="contained" onClick={this.handleAddUser}>Save</Button>
-            </Container>
+          <Container maxWidth="md">
+            <h2>Hello stranger!</h2>
+            <h4>What is your name?</h4>
+            <TextField label="Name" onChange={this.onUserChange} />
+            <Button variant="contained" onClick={this.handleAddUser}>
+              Save
+            </Button>
+          </Container>
         )}
       </div>
     )

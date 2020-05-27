@@ -54,6 +54,15 @@ class Search extends Component {
     this.props.onMovieAdd(movie)
   }
 
+  handleKeyPress = (event) => {
+    console.log(
+      `KeyCode: ${event.charCode} | Key: ${event.key} ( Alt: ${event.altKey}, Ctrl: ${event.ctrlKey})`,
+    )
+    if (event.key === 'Enter') {
+      this.handleSearch()
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -65,6 +74,7 @@ class Search extends Component {
             className={styles.search}
             value={this.state.searchTerm}
             onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
           />
           <Button
             variant="outlined"
