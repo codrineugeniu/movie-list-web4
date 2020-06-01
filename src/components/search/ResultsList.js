@@ -13,6 +13,8 @@ import AddIcon from '@material-ui/icons/Add'
 
 import styles from './ResultsList.module.css'
 
+import { formatDate } from '../../utils/dateUtils';
+
 const getPosterUrl = (imageUri) =>
   imageUri
     ? `https://image.tmdb.org/t/p/w200${imageUri}`
@@ -29,7 +31,7 @@ const ResultsList = (props) => (
           {item.original_title}
         </Grid>
         <Grid item xs={2}>
-          {item.release_date}
+          {formatDate(item.release_date)}
         </Grid>
         <Grid item xs={2}>
           <IconButton onClick={() => props.onAdd(item)}>

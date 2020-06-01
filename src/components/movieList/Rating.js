@@ -15,13 +15,13 @@ class Rating extends Component {
 
   render() {
     const ratings = [...Array(5)].map((item, index) => index + 1)
-    const { changeRating, userRating = 3 } = this.props
+    const { changeRating, userRating, movieId } = this.props
 
     return (
       <div>
         {ratings.map((item) => {
           return (
-            <Icon onClick={() => changeRating(item, this.props.movie)} className={styles.star}>
+            <Icon onClick={() => changeRating(item, movieId)} className={styles.star}>
               {item <= userRating ? <Star /> : <StarBorder />}
             </Icon>
           )

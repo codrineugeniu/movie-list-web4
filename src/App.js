@@ -14,7 +14,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const savedMovies = localStorage.getItem('userData2')
+    const savedMovies = localStorage.getItem('userData')
     const userDetails = localStorage.getItem('userDetails')
     if (userDetails) {
       const parsedUser = JSON.parse(userDetails)
@@ -76,7 +76,28 @@ class App extends React.Component {
     })
   }
 
-  changeRating = (rating, movie) => {
+  changeRating = (rating, movieId) => {
+    const foundIndex = this.state.savedMovies.findIndex(
+      (item) => item.id === movieId,
+    )
+
+    const { savedMovies } = this.state
+
+    const movie = savedMovies[foundIndex]
+
+    savedMovies[foundIndex] = Object.assign({}, movie, { userRating: rating })
+
+    this.setState({
+      savedMovies: savedMovies,
+    })
+
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({
+        savedMovies: savedMovies,
+      }),
+    )
+
     console.log(Object.assign({}, movie, { userRating: rating }))
   }
 
@@ -97,7 +118,10 @@ class App extends React.Component {
             </Container>
             {this.state.showSecret && <h2>This is interactive </h2>}
             <Container maxWidth="md">
-              <MovieList savedMovies={savedMovies} changeRating={this.changeRating} />
+              <MovieList
+                savedMovies={savedMovies}
+                changeRating={this.changeRating}
+              />
             </Container>
           </React.Fragment>
         ) : (
