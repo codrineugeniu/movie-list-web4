@@ -9,12 +9,15 @@ import {
   Typography,
 } from '@material-ui/core'
 
+import { useHistory } from 'react-router-dom';
+
 import Rating from './Rating'
 
 import { formatDate } from '../../utils/dateUtils';
 
 const MovieCard = (props) => {
   const { movie, changeRating } = props
+  let history = useHistory();
   return (
     <Card>
       <CardActionArea>
@@ -34,6 +37,9 @@ const MovieCard = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
+        <Button size="small" color="secondary" onClick={()=> history.push(`/details/${movie.id}`)}>
+          View details
+        </Button>
         <Button size="small" color="primary">
           Delete
         </Button>

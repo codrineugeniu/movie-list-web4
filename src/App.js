@@ -1,8 +1,10 @@
 import React from 'react'
 import Header from './shared/header/Header'
-import { Grid, Container, TextField, Button } from '@material-ui/core'
+import { Container, TextField, Button } from '@material-ui/core'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import MovieList from './components/movieList/MovieList'
+import MovieDetails from './components/movieDetails/MovieDetails'
 import Search from './components/search/Search'
 
 class App extends React.Component {
@@ -109,32 +111,48 @@ class App extends React.Component {
   render() {
     const { savedMovies, user } = this.state
     return (
-      <div className="App">
-        <Header user={user} onLogout={this.logout} />
-        {user ? (
-          <React.Fragment>
+      <Router>
+        <div className="App">
+          <Header user={user} onLogout={this.logout} />
+          {user ? (
+            <Switch>
+              <Route path="/" exact>
+                <React.Fragment>
+                  <Container maxWidth="md">
+                    <Search onMovieAdd={this.onMovieAdd} />
+                  </Container>
+                  {this.state.showSecret && <h2>This is interactive </h2>}
+                  <Container maxWidth="md">
+                    <MovieList
+                      savedMovies={savedMovies}
+                      changeRating={this.changeRating}
+                    />
+                  </Container>
+                </React.Fragment>
+              </Route>
+              <Route path="/settings">Hello {user.userName}</Route>
+              <Route path="/hiddenroute">
+                Secret!!!
+              </Route>
+              <Route path="/details/:id">
+                <MovieDetails />
+              </Route>
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </Switch>
+          ) : (
             <Container maxWidth="md">
-              <Search onMovieAdd={this.onMovieAdd} />
+              <h2>Hello stranger!</h2>
+              <h4>What is your name?</h4>
+              <TextField label="Name" onChange={this.onUserChange} />
+              <Button variant="contained" onClick={this.handleAddUser}>
+                Save
+              </Button>
             </Container>
-            {this.state.showSecret && <h2>This is interactive </h2>}
-            <Container maxWidth="md">
-              <MovieList
-                savedMovies={savedMovies}
-                changeRating={this.changeRating}
-              />
-            </Container>
-          </React.Fragment>
-        ) : (
-          <Container maxWidth="md">
-            <h2>Hello stranger!</h2>
-            <h4>What is your name?</h4>
-            <TextField label="Name" onChange={this.onUserChange} />
-            <Button variant="contained" onClick={this.handleAddUser}>
-              Save
-            </Button>
-          </Container>
-        )}
-      </div>
+          )}
+        </div>
+      </Router>
     )
   }
 }
