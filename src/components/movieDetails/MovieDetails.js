@@ -12,12 +12,9 @@ import {
   Container,
 } from '@material-ui/core'
 
-import { getDetails } from '../../api/MovieService'
+import { getPosterUrl } from '../../utils/urlUtils';
 
-const getPosterUrl = (imageUri) =>
-  imageUri
-    ? `https://image.tmdb.org/t/p/w300${imageUri}`
-    : 'https://placehold.co/200x300?text=No+image'
+import { getDetails } from '../../api/MovieService'
 
 const MovieDetails = () => {
   const { id } = useParams()

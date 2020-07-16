@@ -14,18 +14,15 @@ import AddIcon from '@material-ui/icons/Add'
 import styles from './ResultsList.module.css'
 
 import { formatDate } from '../../utils/dateUtils';
+import { getPosterUrl } from '../../utils/urlUtils';
 
-const getPosterUrl = (imageUri) =>
-  imageUri
-    ? `https://image.tmdb.org/t/p/w200${imageUri}`
-    : 'https://placehold.co/200x300?text=No+image'
 
 const ResultsList = (props) => (
   <React.Fragment>
     {props.movies.map((item) => (
       <Grid container xs={12}>
         <Grid item xs={2}>
-          <img src={getPosterUrl(item.poster_path)} className={styles.poster} />
+          <img src={getPosterUrl(item.poster_path, 200)} className={styles.poster} />
         </Grid>
         <Grid item xs={3}>
           {item.original_title}
